@@ -3,6 +3,8 @@ Some simple Shell scripts to setup ORC revivals semi-automatically on Linux.
 
 These scripts are not supported in any way, shape or form by the official devs of these revivals.
 
+WARNING: ItteBlox seems to currently be not working, due to an ongoing issue with the launcher. This should hopefully be fixed soon.
+
 # What this does
 This script will download dependencies, register URI and install the revival of choice. It can also install DXVK, use/make a custom Wineprefix (tadah and placeholder only) and uninstall the revival of choice.
 
