@@ -12,8 +12,8 @@ echo "Uninstallation done. Run the script like normal if you'd like to reinstall
 exit
 fi
 
-echo "This is the ItteBlox Installer helper, v1.6. "
-echo "Before installation begins, some dependencies need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
+echo "This is the ItteBlox Installer helper, v1.6.5. "
+echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 
 DISTRO=`cat /etc/*release | grep DISTRIB_ID | cut -d '=' -f 2` # gets distro name
@@ -94,12 +94,12 @@ winecfg
 
 echo "The script will now install ItteBlox. After you are done with ItteBloxURI.exe, press CTRL+C to close it. "
 sleep 3
-wget -nc https://cdn.discordapp.com/attachments/876914292488826880/966405305409884290/ItteBlox.zip
+wget -nc https://cdn.discordapp.com/attachments/876914292488826880/967850391431708712/ItteBloxFixed.zip
 mkdir itteblox
-mv itteblox.zip itteblox
+mv ItteBloxFixed.zip itteblox
 cd itteblox
-unzip itteblox.zip
-rm itteblox.zip
+unzip ItteBloxFixed.zip
+rm ItteBloxFixed.zip
 wine ItteBloxURI.exe
 
 echo "The script has installed ItteBlox. Play a game and it should work! "

@@ -34,7 +34,7 @@ exit
 fi
 fi
 
-echo "This is the Placeholder Installer helper, v1.6. "
+echo "This is the Placeholder Installer helper, v1.6.5. "
 echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 

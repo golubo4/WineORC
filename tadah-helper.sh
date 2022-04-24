@@ -27,8 +27,8 @@ exit
 fi
 fi
 
-echo "This is the Tadah Installer helper, v1.6. "
-echo "Before installation begins, some dependencies need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
+echo "This is the Tadah Installer helper, v1.6.5. "
+echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 
 DISTRO=`cat /etc/*release | grep DISTRIB_ID | cut -d '=' -f 2` # gets distro name
@@ -109,8 +109,8 @@ WINEPREFIX=$PREFIX winecfg
 
 echo "The script will now install Tadah."
 sleep 3
-wget -nc https://cdn.discordapp.com/attachments/896484783180382222/962901711763144714/TadahFourteen.exe
-WINEPREFIX=$PREFIX wine TadahFourteen.exe
+wget -nc https://cdn.discordapp.com/attachments/896484783180382222/966449969030660146/TadahLauncher.exe
+WINEPREFIX=$PREFIX wine TadahLauncher.exe
 
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
@@ -127,6 +127,6 @@ fi
 
 echo "The script has installed Tadah. Play a game and it should work! "
 echo "If there are any problems, DM me on Discord. DarDarDar#3429. "
-rm TadahFourteen.exe
+rm TadahLauncher.exe
 exit
 
