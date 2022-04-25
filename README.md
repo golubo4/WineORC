@@ -46,13 +46,8 @@ If the game crashes/doesn't launch, try to
 If those don't work, DM me on Discord: DarDarDar#3429.
 
 # Known issues
-Itteblox 2013 studio doesn't work
-
-Itteblox 2016 locks the mouse after either the right mouse button or shift lock is activated 
 
 Placeholder Installer is a bit wonky (uninstaller seems to not work)
-
-(these three are probably unfixable, sadly)
 
 # Credits
 calones for helping me, and putting up with me being dumb
