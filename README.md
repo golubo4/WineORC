@@ -1,4 +1,4 @@
-# Wineorc v1.6.5
+# Wineorc v1.6.9
 Some simple Shell scripts to setup ORC revivals semi-automatically on Linux.
 
 These scripts are not supported in any way, shape or form by the official devs of these revivals.
@@ -46,6 +46,8 @@ If the game crashes/doesn't launch, try to
 If those don't work, DM me on Discord: DarDarDar#3429.
 
 # Known issues
+
+ItteBlox needs to be installed to home directory, any other location won't work.
 
 Placeholder Installer is a bit wonky (uninstaller seems to not work)
 
