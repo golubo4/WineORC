@@ -12,7 +12,7 @@ echo "Uninstallation done. Run the script like normal if you'd like to reinstall
 exit
 fi
 
-echo "This is the ItteBlox Installer helper, v1.6.5. "
+echo "This is the ItteBlox Installer helper, v1.6.9. "
 echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 
@@ -45,21 +45,26 @@ if [ $VERSION == "18.04" ] || [ $VERSION == "19.3" ]
 				sudo mv winehq-bionic.sources /etc/apt/sources.list.d/
 fi
 sudo apt update
-sudo apt install --install-recommends winehq-staging wget
+sudo apt install --install-recommends winehq-staging wget unzip
+fi
+if [ $DISTRO == "Debian" ]
+then
+echo "If this fails, then a 32-bit multiarch does not exist. You should make one by following this guide: https://wiki.debian.org/Multiarch/HOWTO "
+sudo apt-get install wine-development wget unzip
 fi
 if [ $DISTRO == "ManjaroLinux" ]
 then
 echo "If this fails, then the multilib repo is disabled in /etc/pacman.conf. The dependencies cannot be installed if this is disabled, so please enable it. "
 sleep 3
-sudo pacman -S wine-staging wine-mono wget
+sudo pacman -S wine-staging wine-mono wget unzip
 fi
 if [ $DISTRO == "Fedora" ]
 then
-sudo dnf install wine wget
+sudo dnf install wine wget unzip
 fi
 if [ $DISTRO == "Gentoo" ]
 then
-sudo emerge --ask virtual/wine-staging net-misc/wget
+sudo emerge --ask virtual/wine-staging net-misc/wget app-arch/unzip
 fi
 
 echo "The URI for ItteBlox will now be made. "

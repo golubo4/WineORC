@@ -27,7 +27,7 @@ exit
 fi
 fi
 
-echo "This is the Tadah Installer helper, v1.6.5. "
+echo "This is the Tadah Installer helper, v1.6.9. "
 echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 
@@ -61,6 +61,11 @@ if [ $VERSION == "18.04" ] || [ $VERSION == "19.3" ]
 fi
 sudo apt update
 sudo apt install --install-recommends winehq-staging wget
+fi
+if [ $DISTRO == "Debian" ]
+then
+echo "If this fails, then a 32-bit multiarch does not exist. You should make one by following this guide: https://wiki.debian.org/Multiarch/HOWTO "
+sudo apt-get install wine-development wget
 fi
 if [ $DISTRO == "ManjaroLinux" ]
 then
