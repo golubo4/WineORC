@@ -41,7 +41,7 @@ E.g, `./tadah-helper.sh dxvk/prefix/uninstall`
 If the game crashes/doesn't launch, try to:
 
 1. Downgrade to wine-staging/wine 7.6 (sortof-guide can be found at https://github.com/DarDarDoor/Wineorc/releases/tag/v1.6.10)
-2. Run the installer again (make sure you're running it as non-root)
+2. Run the latest version of the installer again (make sure you're running it as non-root)
 3. Make sure the OS is set to `Windows 10` in `winecfg`
 4. Make sure all necessary optional wine dependencies are installed https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
 
