@@ -13,7 +13,7 @@ The needed packages are:
 - wget
 - unzip (for Itteblox only)
 
-If you are running any form of Ubuntu (that includes Linux Mint and PopOS), Manjaro, Fedora or Gentoo the script will automatically install the dependencies for you.
+If you are running any form of Ubuntu (that includes Linux Mint and PopOS), Debian, Manjaro, Fedora or Gentoo the script will automatically install the dependencies for you.
 
 If you aren't, install them manually via your package manager.
 
