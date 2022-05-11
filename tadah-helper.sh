@@ -27,7 +27,7 @@ exit
 fi
 fi
 
-echo "This is the Tadah Installer helper, v1.6.9. "
+echo "This is the Tadah Installer helper, v1.6.10. "
 echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 
@@ -114,7 +114,7 @@ WINEPREFIX=$PREFIX winecfg
 
 echo "The script will now install Tadah."
 sleep 3
-wget -nc https://cdn.discordapp.com/attachments/896484783180382222/966449969030660146/TadahLauncher.exe
+wget -nc https://cdn.discordapp.com/attachments/896484783180382222/973731248340107284/TadahLauncher.exe
 WINEPREFIX=$PREFIX wine TadahLauncher.exe
 
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
