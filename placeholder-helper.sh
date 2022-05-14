@@ -1,6 +1,41 @@
 #!/bin/bash
 #Made by DarDarDar, 2022
 
+if [ "$1" == "labbing-uninstaller" ] || [ "$1" == "labbing-uninstall" ]
+then
+echo "Uninstalling Labbing and Labbing Studio in 3 seconds.. "
+sleep 3
+wget -nc https://labbing.ml/setup/LabbingInstaller.exe
+read -p "If you'd like to use a custom wineprefix, please enter y. Otherwise, enter n. " THING
+if [ $THING == "y" ]
+then
+read -p "Please enter the custom wineprefix. " PREFIX
+echo "When the installer is run, please select the Uninstall option and follow the prompts, otherwise this won't work. "
+sleep 3
+WINEPREFIX=$PREFIX wine LabbingInstaller.exe
+rm $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder/Labbing -rf
+rm $PREFIX/drive_c/users/$USER/AppData/Local/LabbingStudio -rf
+sudo rm /usr/share/applications/labbing.desktop
+sudo update-desktop-database
+rm LabbingInstaller.exe
+echo "Uninstallation done. Run the script like normal if you'd like to reinstall. "
+exit
+fi
+if [ $THING == "n" ]
+then
+echo "When the installer is run, please select the Uninstall option and follow the prompts, otherwise this won't work. "
+sleep 3
+wine LabbingInstaller.exe
+rm $HOME/.wine/drive_c/users/$USER/AppData/Roaming/Placeholder/Labbing -rf
+rm $HOME/.wine/drive_c/users/$USER/AppData/Local/LabbingStudio -rf
+sudo rm /usr/share/applications/labbing.desktop
+sudo update-desktop-database
+rm LabbingInstaller.exe
+echo "Uninstallation done. Run the script like normal if you'd like to reinstall. "
+exit
+fi
+fi
+
 if [ "$1" == "uninstall" ] || [ "$1" == "uninstaller" ]
 then
 echo "Uninstalling Placeholder in 3 seconds.. "
@@ -13,7 +48,7 @@ read -p "Please enter the custom wineprefix. " PREFIX
 echo "When the installer is run, please select the Uninstall option and follow the prompts, otherwise this won't work. "
 sleep 3
 WINEPREFIX=$PREFIX wine PlaceholderInstaller.exe
-rm $HOME/.wine/drive_c/users/$USER/AppData/Roaming/Placeholder -rf
+rm $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder -rf
 sudo rm /usr/share/applications/placeholder.desktop
 sudo update-desktop-database
 rm PlaceholderInstaller.exe
@@ -34,7 +69,7 @@ exit
 fi
 fi
 
-echo "This is the Placeholder Installer helper, v1.6.9. "
+echo "This is the Placeholder/Labbing Installer helper, v1.7. "
 echo "Before installation begins, some dependencies may need to be installed. If anything prompts for a password, enter it, and if there's a yes/no answer, enter yes. "
 sleep 3
 
@@ -100,6 +135,34 @@ echo "Directory doesn't exist, creating.. "
 mkdir $PREFIX
 WINEPREFIX=$PREFIX
 fi
+fi
+
+if [ "$1" == "labbing" ] || [ "$2" == "labbing" ] || [ "$3" == "labbing" ]
+then
+echo "Warning: Regular Placeholder needs to be installed for the Labbing install to work. Please run the script like normal if it isn't installed. "
+sleep 2
+echo "The URI for Labbing will now be made. "
+touch labbing.desktop
+echo "[Desktop Entry]" >> labbing.desktop
+echo "Name=Labbing Player" >> labbing.desktop
+echo "Comment=https://labbing.ml/" >> labbing.desktop
+echo "Type=Application" >> labbing.desktop
+echo "Exec=wine $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder/Labbing/LabbingLauncher.exe %u" >> labbing.desktop
+echo "MimeType=x-scheme-handler/labbing2016" >> labbing.desktop
+sudo mv labbing.desktop /usr/share/applications
+sudo update-desktop-database
+cat /usr/share/applications/labbing.desktop
+echo "The script will now install Labbing. Don't change the install location, otherwise URI won't work. "
+wget -nc https://labbing.ml/setup/LabbingInstaller.exe
+WINEPREFIX=$PREFIX wine LabbingInstaller.exe
+echo "The script will now also install Labbing Studio. When it Studio launches, close it. "
+wget -nc https://cdn.discordapp.com/attachments/953497042402041897/973969487017676800/LabbingStudioLauncher.exe
+WINEPREFIX=$PREFIX wine LabbingStudioLauncher.exe
+echo "The script has installed Labbing. Play a game and it should work! "
+echo "To launch Labbing Studio, use wine to launch the LabbingStudioLauncher.exe (located in the same directory that the script was ran in) file, and it will launch studio. "
+echo "If there are any problems, DM me on Discord. DarDarDar#3429. "
+rm LabbingInstaller.exe
+exit
 fi
 
 echo "The URI for Placeholder will now be made. "
