@@ -100,9 +100,9 @@ winecfg
 echo "The script will now install ItteBlox. After you are done with ItteBloxURI.exe, press CTRL+C to close it. "
 sleep 3
 wget -nc https://cdn.discordapp.com/attachments/876914292488826880/967850391431708712/ItteBloxFixed.zip
-mkdir itteblox
-mv ItteBloxFixed.zip itteblox
-cd itteblox
+mkdir $HOME/itteblox
+mv ItteBloxFixed.zip $HOME/itteblox
+cd $HOME/itteblox
 unzip ItteBloxFixed.zip
 rm ItteBloxFixed.zip
 wine ItteBloxURI.exe
