@@ -40,18 +40,18 @@ if [ "$1" == "uninstall" ] || [ "$1" == "uninstaller" ]
 then
 echo "Uninstalling Placeholder in 3 seconds.. "
 sleep 3
-wget -nc https://placeholder16.tk/setup/PlaceholderInstaller.exe
+wget -nc https://cdn.discordapp.com/attachments/976472348574244936/983787617814466570/PlaceholderPlayerLauncher.exe
 read -p "If you'd like to use a custom wineprefix, please enter y. Otherwise, enter n. " THING
 if [ $THING == "y" ]
 then
 read -p "Please enter the custom wineprefix. " PREFIX
 echo "When the installer is run, please select the Uninstall option and follow the prompts, otherwise this won't work. "
 sleep 3
-WINEPREFIX=$PREFIX wine PlaceholderInstaller.exe
+WINEPREFIX=$PREFIX wine PlaceholderPlayerLauncher.exe -Uninstall
 rm $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder -rf
 sudo rm /usr/share/applications/placeholder.desktop
 sudo update-desktop-database
-rm PlaceholderInstaller.exe
+rm PlaceholderPlayerLauncher.exe
 echo "Uninstallation done. Run the script like normal if you'd like to reinstall. "
 exit
 fi
@@ -59,11 +59,11 @@ if [ $THING == "n" ]
 then
 echo "When the installer is run, please select the Uninstall option and follow the prompts, otherwise this won't work. "
 sleep 3
-wine PlaceholderInstaller.exe
+wine PlaceholderPlayerLauncher.exe -Uninstall
 rm $HOME/.wine/drive_c/users/$USER/AppData/Roaming/Placeholder -rf
 sudo rm /usr/share/applications/placeholder.desktop
 sudo update-desktop-database
-rm PlaceholderInstaller.exe
+rm PlaceholderPlayerLauncher.exe
 echo "Uninstallation done. Run the script like normal if you'd like to reinstall. "
 exit
 fi
@@ -172,7 +172,7 @@ echo "[Desktop Entry]" >> placeholder.desktop
 echo "Name=Placeholder Player" >> placeholder.desktop
 echo "Comment=https://placeholder16.tk/" >> placeholder.desktop
 echo "Type=Application" >> placeholder.desktop
-echo "Exec=wine $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder/PlaceholderLauncher.exe %u" >> placeholder.desktop
+echo "Exec=wine $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder/Versions/*/PlaceholderLauncher.exe %u" >> placeholder.desktop
 echo "MimeType=x-scheme-handler/placeholder2016" >> placeholder.desktop
 sudo mv placeholder.desktop /usr/share/applications
 sudo update-desktop-database
@@ -184,8 +184,8 @@ WINEPREFIX=$PREFIX winecfg
 
 echo "The script will now install Placeholder. Don't change the install location, otherwise URI won't work. " 
 sleep 3
-wget -nc https://placeholder16.tk/setup/PlaceholderInstaller.exe
-WINEPREFIX=$PREFIX wine PlaceholderInstaller.exe
+wget -nc https://cdn.discordapp.com/attachments/976472348574244936/983787617814466570/PlaceholderPlayerLauncher.exe
+WINEPREFIX=$PREFIX wine PlaceholderPlayerLauncher.exe
 
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
@@ -202,6 +202,6 @@ fi
 
 echo "The script has installed Placeholder. Play a game and it should work! "
 echo "If there are any problems, DM me on Discord. DarDarDar#3429. "
-rm PlaceholderInstaller.exe
+rm PlaceholderPlayerLauncher.exe
 exit
 
