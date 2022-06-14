@@ -29,8 +29,6 @@ If you aren't, install them manually via your package manager.
 - `./placeholder-helper.sh` for Placeholder
 5. Once installed, play a game and it should work!
 
-If you want to install Labbing, run the Placeholder script with the parameter "labbing".
-
 If you want to install DXVK alongside the revival, run the script with the parameter "dxvk".
 
 If you want to use/make a custom Wineprefix alongside the revival, run the script with the parameter "prefix". These two can also be used alongside each other.
