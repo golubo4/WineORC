@@ -1,5 +1,5 @@
 #!/bin/bash
-#Made by DarDarDar, 2022
+#Made by DarDarDar, 2022 
 
 if [ "$1" == "labbing-uninstaller" ] || [ "$1" == "labbing-uninstall" ]
 then
