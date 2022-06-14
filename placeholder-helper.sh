@@ -60,7 +60,7 @@ then
 echo "When the installer is run, please select the Uninstall option and follow the prompts, otherwise this won't work. "
 sleep 3
 wine PlaceholderPlayerLauncher.exe -Uninstall
-rm $HOME/.wine/drive_c/users/$USER/AppData/Roaming/Placeholder -rf
+rm $HOME/.wine/drive_c/users/$USER/AppData/Local/Placeholder -rf
 sudo rm /usr/share/applications/placeholder.desktop
 sudo update-desktop-database
 rm PlaceholderPlayerLauncher.exe
@@ -172,7 +172,7 @@ echo "[Desktop Entry]" >> placeholder.desktop
 echo "Name=Placeholder Player" >> placeholder.desktop
 echo "Comment=https://placeholder16.tk/" >> placeholder.desktop
 echo "Type=Application" >> placeholder.desktop
-echo "Exec=wine $PREFIX/drive_c/users/$USER/AppData/Roaming/Placeholder/Versions/*/PlaceholderLauncher.exe %u" >> placeholder.desktop
+echo "Exec=wine $PREFIX/drive_c/users/$USER/AppData/Local/Placeholder/Versions/*/PlaceholderPlayerLauncher.exe %u" >> placeholder.desktop
 echo "MimeType=x-scheme-handler/placeholder2016" >> placeholder.desktop
 sudo mv placeholder.desktop /usr/share/applications
 sudo update-desktop-database
