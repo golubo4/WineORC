@@ -33,7 +33,7 @@ If you want to install DXVK alongside the revival, run the script with the param
 
 If you want to use/make a custom Wineprefix alongside the revival, run the script with the parameter "prefix". These two can also be used alongside each other.
 
-If you want to uninstall a revival, run the script with the parameter "uninstall". For Labbing, use "labbing-uninstall" on the Placeholder script.
+If you want to uninstall a revival, run the script with the parameter "uninstall".
 
 E.g, `./tadah-helper.sh dxvk/prefix/uninstall`
 
