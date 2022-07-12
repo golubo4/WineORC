@@ -43,6 +43,8 @@ If those don't work, DM me on Discord: DarDarDar#3429.
 Polygon 2012 seems to not work
 
 ## Credits
+vl1 for making the polygon guide
+
 calones for helping me, and putting up with me being dumb
 
 thexkey for helping me alot making the Placeholder helper
