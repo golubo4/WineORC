@@ -9,7 +9,7 @@
 This script is not supported in any way, shape or form by the official devs of these revivals.
 
 ## ⚡ What this does
-This script will download dependencies, register URI and install the revival of choice. It can also install DXVK, and uninstall the revival of choice.
+This script will download dependencies, register URI and install the revival of choice (Currently Polygon, Placeholder and ItteBlox). It can also install DXVK, and uninstall the revival of choice.
 
 ## ⚠️ Requirements
 The needed packages are:
