@@ -1,4 +1,9 @@
-# Wineorc v1.7
+<div align="center" class="tip" markdown="1" style>
+
+![wineorc logo](https://raw.githubusercontent.com/DarDarDoor/Wineorc/main/photos/Wineorclogo.png)
+![wine ver](https://img.shields.io/badge/wine-7.12-red) ![repo ver](https://img.shields.io/badge/Current%20version-2.0-success) ![lol](https://img.shields.io/badge/Pretty-cool-informational)
+</div>
+
 Some simple Shell scripts to setup ORC revivals semi-automatically on Linux.
 
 These scripts are not supported in any way, shape or form by the official devs of these revivals.
