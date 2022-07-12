@@ -52,6 +52,7 @@ itteh, pizzaboxer, kinery and thexkey for making great revivals
 <div align="center" class="tip" markdown="1" style>
 
 ![itteblox working](https://raw.githubusercontent.com/DarDarDoor/Wineorc/main/photos/ittebloxlinux.png)
+
 ItteBlox 2016 working on Arch Linux
 
 </div>
