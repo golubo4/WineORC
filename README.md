@@ -13,10 +13,10 @@ This script will download dependencies, register URI and install the revival of 
 
 ## ⚠️ Requirements
 The needed packages are:
-- sudo
-- The latest wine (obv, preferably wine-staging)
-- wget
-- unzip (for Itteblox only)
+- `sudo`
+- The latest WINE (obv, preferably wine-staging)
+- `wget`
+- `unzip` (for Itteblox only)
 
 The script can install WINE for you. However, only some distros are supported, so if it fails then you should install WINE and the other dependencies manually.
 
