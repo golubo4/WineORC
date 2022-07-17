@@ -36,7 +36,7 @@ If the revival crashes/doesn't launch, try to:
 
 1. Make sure all necessary optional wine dependencies are installed. You can install them on Arch Linux by running these commands:
 
-`sudo pacman -S expac
+`sudo pacman -S expac &&
 sudo pacman -S $(expac '%n %o' | grep ^wine)`
 
 If you're not on arch, look at this website to see all the dependencies: https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
