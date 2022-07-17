@@ -3,7 +3,7 @@
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.0 "
+	echo "Wineorc v2.1 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -108,6 +108,8 @@ fi
 
 wineinstaller ()
 {
+    echo "Please accept any prompts it gives you and enter your password if necessary. "
+    sleep 3
     DISTRO=`cat /etc/*release | grep DISTRIB_ID | cut -d '=' -f 2` # gets distro name
     if [ $DISTRO == "Ubuntu" ] || [ $DISTRO == "LinuxMint" ] || [ $DISTRO == "Pop" ]
     then 
@@ -148,7 +150,8 @@ wineinstaller ()
     then
         echo "If this fails, then the multilib repo is disabled in /etc/pacman.conf. The dependencies cannot be installed if this is disabled, so please enable it. "
         sleep 3
-        sudo pacman -S wine-staging wine-mono 
+        sudo pacman -S wine-staging wine-mono expac # Arch Linux wine comes with a incredibly minimal package, so let's use expac to download everything it needs
+	sudo pacman -S $(expac '%n %o' | grep ^wine)
     fi
     if [ $DISTRO == "Fedora" ]
     then
@@ -184,6 +187,12 @@ winecheck ()
 
 othercheck ()
 {
+	if [ ! -x /usr/bin/cabextract ]
+	then
+		echo "cabextract seems to not be installed. Please kill the script then install cabextract via your package manager. "
+		echo "If you're sure it's installed, then don't kill the script. "
+		sleep 3
+	fi
 	if [ ! -x /usr/bin/wget ]
 	then
 		echo "wget seems to not be installed. Please kill the script then install wget via your package manager. "
@@ -215,7 +224,7 @@ uri ()
 		echo "Name=Polygon 2010" >> $PT
 		echo "Comment=https://polygon.pizzaboxer.xyz" >> $PT
 		echo "Type=Application" >> $PT
-		echo "Exec=env WINEPREFIX=$PREFIX wine $PREFIX/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-386164ab165b55af/Polygon.exe %U" >> $PT
+		echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-386164ab165b55af/Polygon.exe %U" >> $PT
 		echo "MimeType=x-scheme-handler/polygon-ten" >> $PT
 		touch polygon11.desktop
 		PT="polygon11.desktop"
@@ -223,7 +232,7 @@ uri ()
                 echo "Name=Polygon 2011" >> $PT 
                 echo "Comment=https://polygon.pizzaboxer.xyz" >> $PT 
                 echo "Type=Application" >> $PT
-                echo "Exec=env WINEPREFIX=$PREFIX wine $PREFIX/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-9512c515176f9859/Polygon.exe %U" >> $PT                          
+                echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-9512c515176f9859/Polygon.exe %U" >> $PT                          
                 echo "MimeType=x-scheme-handler/polygon-eleven" >> $PT
 		touch polygon12.desktop
 		PT="polygon12.desktop"
@@ -231,7 +240,7 @@ uri ()
                 echo "Name=Polygon 2012" >> $PT 
                 echo "Comment=https://polygon.pizzaboxer.xyz" >> $PT 
                 echo "Type=Application" >> $PT
-                echo "Exec=env WINEPREFIX=$PREFIX wine $PREFIX/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-f9324578ab26456f/Polygon.exe %U" >> $PT                          
+                echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-f9324578ab26456f/Polygon.exe %U" >> $PT                          
                 echo "MimeType=x-scheme-handler/polygon-twelve" >> $PT
 	fi
 	if [ $CURRENT == "ItteBlox" ]
@@ -265,23 +274,22 @@ polygon ()
 	echo "$CURRENT is now being installed, please wait as this may take some time. "
 	sleep 3
 	mkdir $HOME/.polygon # We're going to make a custom wineprefix against the user's will, since Polygon requires a fuck-ton of stupid dependencies to even run.
-	PREFIX=$HOME/.polygon
 	mkdir $HOME/tmp
 	cd $HOME/tmp
 	wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 	chmod +x winetricks
-	WINEPREFIX=$PREFIX ./winetricks --unattended vcrun2003 vcrun2005 vcrun2008 vcrun2010 vcrun2012 vcrun2013 vcrun2019 d3dcompiler_42 d3dcompiler_43 d3dcompiler_46 d3dcompiler_47 d3drm d3dx10 d3dx11_42 d3dx11_43 d3dx9
+	WINEPREFIX=$HOME/.polygon ./winetricks --unattended vcrun2008 vcrun2015 mfc90
 	wget setup2010.pizzaboxer.xyz/Polygon2010.exe
 	wget setup2011.pizzaboxer.xyz/Polygon2011.exe
 	wget setup2012.pizzaboxer.xyz/Polygon2012.exe
 	echo "If any of these don't seem to close on its own, kill it with CTRL+C. "
 	sleep 1
-	WINEPREFIX=$PREFIX wine Polygon2010.exe
-	WINEPREFIX=$PREFIX wine Polygon2011.exe
+	WINEPREFIX=$HOME/.polygon wine Polygon2010.exe
+	WINEPREFIX=$HOME/.polygon wine Polygon2011.exe
 	echo "Your browser may open to the Polygon website when this is ran. Just close it. "
 	sleep 1
-	WINEPREFIX=$PREFIX wine Polygon2012.exe
-	cd $PREFIX/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions # this next part really sucks
+	WINEPREFIX=$HOME/.polygon wine Polygon2012.exe
+	cd $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions # this next part really sucks
 	cd version-3* # 2010
 	cd Microsoft.VC90.CRT
 	cp * ..
@@ -306,14 +314,11 @@ polygon ()
         cd ../.. 
 	cd version-f* # 2012
 	cd Microsoft.VC90.CRT
-        cp * ..
-        cd ..
-        cd Microsoft.VC90.MFC
-        cp * ..
+        cp msvcr90.dll msvcp90.dll ..
         cd ..
         cd Microsoft.VC90.OPENMP
         cp * ..
-        cd $HOME/tmp 
+        cd $HOME/tmp
 	uri
 }
 
