@@ -1,7 +1,7 @@
 <div align="center" class="tip" markdown="1" style>
 
 ![wineorc logo](https://raw.githubusercontent.com/DarDarDoor/Wineorc/main/photos/Wineorclogo.png)
-![wine ver](https://img.shields.io/badge/wine-7.12-red) ![repo ver](https://img.shields.io/badge/Current%20version-2.0-success) ![lol](https://img.shields.io/badge/Pretty-cool-informational)
+![wine ver](https://img.shields.io/badge/wine-7.12-red) ![repo ver](https://img.shields.io/badge/Current%20version-2.1-success) ![lol](https://img.shields.io/badge/Pretty-cool-informational)
 </div>
 
 # 🍷 A simple Shell script to setup ORC revivals automatically on Linux
@@ -15,6 +15,7 @@ This script will download dependencies, register URI and install the revival of 
 The needed packages are:
 - `sudo`
 - The latest WINE (obv, preferably wine-staging)
+- `cabextract`
 - `wget`
 - `unzip` (for Itteblox only)
 
@@ -33,14 +34,14 @@ See `./wineorc.sh --help` for all available options.
 ## ❗ Troubleshooting
 If the revival crashes/doesn't launch, try to:
 
-1. Run the latest version of the installer again (make sure you're running it as non-root)
-2. Make sure all necessary optional wine dependencies are installed https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
+1. Make sure all necessary optional wine dependencies are installed. You can install them on Arch Linux by running these commands:
+`sudo pacman -S expac
+sudo pacman -S $(expac '%n %o' | grep ^wine)`
+If you're not on arch, look at this website to see all the dependencies: https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
+
+2. Uninstalling the revival (use `./wineorc.sh uninstall` and then select the revival) and then reinstalling it again.
 
 If those don't work, DM me on Discord: DarDarDar#3429.
-
-## 🗡️ Known issues
-
-Polygon 2012 seems to not work
 
 ## Credits
 vl1 for making the Polygon guide
