@@ -3,7 +3,7 @@
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.1 "
+	echo "Wineorc v2.2 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -32,20 +32,23 @@ uninstall ()
 	then
 		rm $HOME/.polygon -rf
 		sudo rm /usr/share/applications/polygon1*
-		sudo update-desktop-database
+	fi
+	if [ $CURRENT == "Roblosium" ]
+	then
+		rm $HOME/.roblosium -rf
+		sudo rm /usr/share/applications/roblosium.desktop
 	fi
 	if [ $CURRENT == "Placeholder" ]
 	then
 		rm $HOME/.placeholder -rf
 		sudo rm /usr/share/applications/placeholder.desktop
-		sudo update-desktop-database
 	fi
 	if [ $CURRENT == "ItteBlox" ]
 	then
 		rm $HOME/.itteblox -rf
 		sudo rm /usr/share/applications/itteblox.desktop
-		sudo update-desktop-database
 	fi
+	sudo update-desktop-database
 	echo "Uninstall done. Run the script again if you'd like to reinstall. "
         exit
 }
@@ -54,8 +57,9 @@ if [ "$1" == "uninstall" ] || [ "$2" == "uninstall" ]
 then
 	echo "Please select the revival you'd like to uninstall: "
 	echo "1. Polygon "
-	echo "2. Placeholder "
-	echo "3. ItteBlox "
+	echo "2. Roblosium "
+	echo "3. Placeholder "
+	echo "4. ItteBlox "
 	read UNINSTALLOPT
 	if [ $UNINSTALLOPT == "1" ]
 	then
@@ -64,10 +68,15 @@ then
 	fi
 	if [ $UNINSTALLOPT == "2" ]
 	then
-		CURRENT="Placeholder"
+		CURRENT="Roblosium"
 		uninstall
 	fi
 	if [ $UNINSTALLOPT == "3" ]
+	then
+		CURRENT="Placeholder"
+		uninstall
+	fi
+	if [ $UNINSTALLOPT == "4" ]
 	then
 		CURRENT="ItteBlox"
 		uninstall
@@ -78,7 +87,8 @@ if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
 	echo "Please select the wineprefix you'd like DXVK to install to: "
 	echo "1. Default wineprefix (Used for ItteBlox install) "
-	echo "2. Placeholder wineprefix (Used for Placeholder) "
+	echo "2. Roblosium wineprefix (Used for Roblosium) "
+	echo "3. Placeholder wineprefix (Used for Placeholder) "
 	read DXVKOPT
 	if [ $DXVKOPT == "1" ]
 	then
@@ -91,7 +101,18 @@ then
 		cd $HOME
 		rm tmp -rf
 	fi
-	if [ $DXVKOPT == "2" ]
+        if [ $DXVKOPT == "2" ]
+        then
+                mkdir $HOME/tmp
+                cd $HOME/tmp
+                wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
+                tar -xf dxvk-1.10.1.tar.gz
+                cd dxvk-1.10.1
+                WINEPREFIX=$HOME/.roblosium ./setup_dxvk.sh install
+                cd $HOME
+                rm tmp -rf
+        fi
+	if [ $DXVKOPT == "3" ]
 	then
 		mkdir $HOME/tmp
                 cd $HOME/tmp
@@ -187,11 +208,16 @@ winecheck ()
 
 othercheck ()
 {
-	if [ ! -x /usr/bin/cabextract ]
-	then
-		echo "cabextract seems to not be installed. Please kill the script then install cabextract via your package manager. "
-		echo "If you're sure it's installed, then don't kill the script. "
-		sleep 3
+	if [ $CURRENT == "Polygon" ]
+	then 
+	        if [ ! -x /usr/bin/cabextract ]
+		then
+			echo "cabextract seems to not be installed. Please kill the script then install cabextract via your package manager. "
+			echo "If you're sure it's installed, then don't kill the script. "
+			sleep 3
+		else
+			echo "cabextract is installed, skipping check.. "
+		fi
 	fi
 	if [ ! -x /usr/bin/wget ]
 	then
@@ -242,6 +268,16 @@ uri ()
                 echo "Type=Application" >> $PT
                 echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-f9324578ab26456f/Polygon.exe %U" >> $PT                          
                 echo "MimeType=x-scheme-handler/polygon-twelve" >> $PT
+	fi
+	if [ $CURRENT == "Roblosium" ]
+	then
+		touch roblosium.desktop
+		echo "[Desktop Entry]" >> roblosium.desktop
+		echo "Name=Roblosium" >> roblosium.desktop
+		echo "Comment=https://roblosium.xyz" >> roblosium.desktop
+		echo "Type=Application" >> roblosium.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.roblosium wine $HOME/.roblosium/drive_c/users/$USER/AppData/Local/ROBLOSIUM/Versions/version-c51d29d1de464d81/RobloxPlayerLauncher.exe %U" >> roblosium.desktop
+		echo "MimeType=x-scheme-handler/roblosium-player" >> roblosium.desktop
 	fi
 	if [ $CURRENT == "ItteBlox" ]
 	then
@@ -356,10 +392,29 @@ placeholder ()
 	uri
 }
 
+roblosium ()
+{
+	winecheck
+	othercheck
+	echo "$CURRENT is now being installed, please wait as this may take some time. "
+	sleep 3
+	mkdir $HOME/.roblosium
+	WINEPREFIX=$HOME/.roblosium winecfg -v win10
+	mkdir $HOME/tmp
+	cd $HOME/tmp
+	wget http://setup.roblosium.xyz/RobloxPlayerLauncher.exe
+	echo "Your browser may open to the Roblosium website when this is ran. Just close it. "
+	sleep 1
+	WINEPREFIX=$HOME/.roblosium wine RobloxPlayerLauncher.exe
+	uri
+
+}
+
 echo "Welcome to Wineorc, please select an revival to install. (see --help for other options) "
 echo "1. Polygon "
-echo "2. Placeholder "
-echo "3. ItteBlox "
+echo "2. Roblosium "
+echo "3. Placeholder "
+echo "4. ItteBlox "
 read OPT
 if [ $OPT == "1" ] 
 then
@@ -368,10 +423,15 @@ then
 fi
 if [ $OPT == "2" ]
 then
+	CURRENT="Roblosium"
+	roblosium
+fi
+if [ $OPT == "3" ]
+then
 	CURRENT="Placeholder"
 	placeholder
 fi
-if [ $OPT == "3" ]
+if [ $OPT == "4" ]
 then
 	CURRENT="ItteBlox"
 	itteblox
