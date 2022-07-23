@@ -3,7 +3,7 @@
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.2 "
+	echo "Wineorc v2.3 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -43,6 +43,11 @@ uninstall ()
 		rm $HOME/.placeholder -rf
 		sudo rm /usr/share/applications/placeholder.desktop
 	fi
+	if [ $CURRENT == "Crapblox" ]
+	then
+		rm $HOME/.crapblox -rf
+		sudo rm /usr/share/applications/crapblox.desktop
+	fi
 	if [ $CURRENT == "ItteBlox" ]
 	then
 		rm $HOME/.itteblox -rf
@@ -59,7 +64,8 @@ then
 	echo "1. Polygon "
 	echo "2. Roblosium "
 	echo "3. Placeholder "
-	echo "4. ItteBlox "
+	echo "4. Crapblox "
+	echo "5. ItteBlox "
 	read UNINSTALLOPT
 	if [ $UNINSTALLOPT == "1" ]
 	then
@@ -78,6 +84,11 @@ then
 	fi
 	if [ $UNINSTALLOPT == "4" ]
 	then
+		CURRENT="Crapblox"
+		uninstall
+	fi
+	if [ $UNINSTALLOPT == "5" ]
+	then
 		CURRENT="ItteBlox"
 		uninstall
 	fi
@@ -89,6 +100,7 @@ then
 	echo "1. Default wineprefix (Used for ItteBlox install) "
 	echo "2. Roblosium wineprefix (Used for Roblosium) "
 	echo "3. Placeholder wineprefix (Used for Placeholder) "
+	echo "4. Crapblox wineprefix (Used for Crapblox) "
 	read DXVKOPT
 	if [ $DXVKOPT == "1" ]
 	then
@@ -123,6 +135,17 @@ then
 		cd $HOME
 		rm tmp -rf
 	fi
+        if [ $DXVKOPT == "4" ]
+        then
+                mkdir $HOME/tmp
+                cd $HOME/tmp
+                wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
+                tar -xf dxvk-1.10.1.tar.gz
+                cd dxvk-1.10.1
+                WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
+                cd $HOME
+                rm tmp -rf
+        fi
 	echo "DXVK has been installed to selected wineprefix. "
 	exit
 fi
@@ -299,6 +322,16 @@ uri ()
 		echo "Exec=env WINEPREFIX=$HOME/.placeholder wine $HOME/.placeholder/drive_c/users/$USER/AppData/Local/Placeholder/Versions/version-wtf/PlaceholderPlayerLauncher.exe %u" >> placeholder.desktop
 		echo "MimeType=x-scheme-handler/placeholder-player-placeholder16" >> placeholder.desktop
 	fi
+	if [ $CURRENT = "Crapblox" ]
+	then
+		touch crapblox.desktop
+		echo "[Desktop Entry]" >> crapblox.desktop
+		echo "Name=Crapblox" >> crapblox.desktop
+		echo "Comment=https://crapblox.cf" >> crapblox.desktop
+		echo "Type=Application" >> crapblox.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.crapblox wine $HOME/.crapblox/drive_c/users/$USER/AppData/Local/CrapbloxLauncher.exe %U" >> crapblox.desktop
+		echo "MimeType=x-scheme-handler/crapblox2" >> crapblox.desktop
+	fi
 	sudo mv *.desktop /usr/share/applications
 	sudo update-desktop-database
 }
@@ -410,11 +443,28 @@ roblosium ()
 
 }
 
+crapblox ()
+{
+	winecheck
+	othercheck
+	echo "$CURRENT is now being installed, please wait as this may take some time. "
+	sleep 3
+	mkdir $HOME/.crapblox
+	WINEPREFIX=$HOME/.crapblox winecfg -v win10
+	cd $HOME/.crapblox/drive_c/users/$USER/AppData/Local # we're doing this cos it installs the client in the same folder as where the installer is ran
+	wget https://cdn.discordapp.com/attachments/999146339801776138/1000288813807054938/CrapbloxLauncher.exe 
+	echo "Don't panic if this looks stuck. Give it a few minutes, if it doesn't work then stop the script, uninstall crapblox using the script, then try running the script again. "
+	sleep 3
+	WINEPREFIX=$HOME/.crapblox wine CrapbloxLauncher.exe
+	uri
+}
+
 echo "Welcome to Wineorc, please select an revival to install. (see --help for other options) "
 echo "1. Polygon "
 echo "2. Roblosium "
 echo "3. Placeholder "
-echo "4. ItteBlox "
+echo "4. Crapblox "
+echo "5. ItteBlox "
 read OPT
 if [ $OPT == "1" ] 
 then
@@ -432,6 +482,11 @@ then
 	placeholder
 fi
 if [ $OPT == "4" ]
+then
+	CURRENT="Crapblox"
+	crapblox
+fi
+if [ $OPT == "5" ]
 then
 	CURRENT="ItteBlox"
 	itteblox
