@@ -3,7 +3,7 @@
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.3 "
+	echo "Wineorc v2.4 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -97,7 +97,7 @@ fi
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
 	echo "Please select the wineprefix you'd like DXVK to install to: "
-	echo "1. Default wineprefix (Used for ItteBlox install) "
+	echo "1. ItteBlox wineprefix (Used for ItteBlox install) "
 	echo "2. Roblosium wineprefix (Used for Roblosium) "
 	echo "3. Placeholder wineprefix (Used for Placeholder) "
 	echo "4. Crapblox wineprefix (Used for Crapblox) "
@@ -109,7 +109,7 @@ then
 		wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
 		tar -xf dxvk-1.10.1.tar.gz
 		cd dxvk-1.10.1
-		WINEPREFIX=$HOME/.wine ./setup_dxvk.sh install
+		WINEPREFIX=$HOME/.itteblox ./setup_dxvk.sh install
 		cd $HOME
 		rm tmp -rf
 	fi
@@ -252,13 +252,13 @@ othercheck ()
 	fi
 	if [ $CURRENT == "ItteBlox" ]
 	then	
-		if [ ! -x /usr/bin/unzip ]
+		if [ ! -x /usr/bin/curl ]
 		then
-			echo "unzip seems to not be installed. Please kill the script then install unzip via your package manager. "
+			echo "curl seems to not be installed. Please kill the script then install curl via your package manager. "
 			echo "If you're sure it's installed, then don't kill the script. "
 			sleep 3
 		else
-			echo "unzip is installed, skipping check.. "
+			echo "curl is installed, skipping check.. "
 		fi
 	fi
 }
@@ -309,8 +309,8 @@ uri ()
 		echo "Name=Itteblox Player" >> itteblox.desktop
 		echo "Comment=https://ittblox.gay/" >> itteblox.desktop
 		echo "Type=Application" >> itteblox.desktop
-		echo "Exec=wine $HOME/.itteblox/ItteBloxLauncher.exe %U" >> itteblox.desktop
-		echo "MimeType=x-scheme-handler/itblox" >> itteblox.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.itteblox wine $HOME/.itteblox/drive_c/users/$USER/AppData/Local/ItteBlox/Versions/$ITTEBLOXVER/ItteBloxPlayerLauncher.exe %U" >> itteblox.desktop
+		echo "MimeType=x-scheme-handler/ittblx-player" >> itteblox.desktop
 	fi
 	if [ $CURRENT == "Placeholder" ]
 	then
@@ -397,15 +397,14 @@ itteblox ()
 	othercheck
 	echo "$CURRENT is now being installed, please wait as this may take some time. "
         sleep 3
-	winecfg -v win10 # We'll use the default wineprefix for this
+	ITTEBLOXVER=`curl https://setup.ittblox.gay/version/` # we'll need this for uri
 	mkdir $HOME/.itteblox
-	cd $HOME/.itteblox
-	wget https://cdn.discordapp.com/attachments/876914292488826880/967850391431708712/ItteBloxFixed.zip
-	unzip *.zip
-	rm *.zip
-	echo "Once this is done, press any key to close it. "
-	sleep 1
-	wine ItteBloxURI.exe
+	WINEPREFIX=$HOME/.itteblox winecfg -v win10
+	mkdir $HOME/tmp
+	cd $HOME/tmp
+	wget https://setup.ittblox.gay/ItteBloxPlayerLauncher.exe
+	WINEPREFIX=$HOME/.itteblox wine ItteBloxPlayerLauncher.exe
+	wineserver -k
 	uri
 }
 
