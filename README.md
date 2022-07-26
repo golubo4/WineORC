@@ -41,7 +41,7 @@ sudo pacman -S $(expac '%n %o' | grep ^wine)`
 
 If you're not on arch, look at this website to see all the dependencies: https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
 
-2. Uninstalling the revival (use `./wineorc.sh uninstall` and then select the revival) and then reinstalling it again.
+2. Uninstalling the revival (use `./wineorc.sh uninstall` and then select the revival) and then reinstalling it again. (this really can help)
 
 3. (for Roblosium only) Make sure that your ad-blocker is disabled when trying to join a game.
 
