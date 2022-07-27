@@ -31,6 +31,17 @@ The script can install WINE for you. However, only some distros are supported, s
 
 See `./wineorc.sh --help` for all available options.
 
+## ⬆️ How to update the revival
+You should do these steps if the revival has recently been updated:
+
+1. Download the latest Wineorc version (get it from the Releases tab)
+
+2. Run `./wineorc.sh uninstall`, then select your revival. Enter your password if prompted.
+
+3. Run the script normally.
+
+If the script has an out of date launcher, ping me on Discord and I'll update it. You can also open a pull request with the latest link, and I'll accept it.
+
 ## ❗ Troubleshooting
 If the revival crashes/doesn't launch, try to:
 
