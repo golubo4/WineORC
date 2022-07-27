@@ -3,7 +3,7 @@
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.4 "
+	echo "Wineorc v2.4.5 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -250,7 +250,7 @@ othercheck ()
 	else
 		echo "wget is installed, skipping check.. "
 	fi
-	if [ $CURRENT == "ItteBlox" ]
+	if [ $CURRENT == "ItteBlox" ] || [ $CURRENT == "Roblosium" ]
 	then	
 		if [ ! -x /usr/bin/curl ]
 		then
@@ -299,7 +299,7 @@ uri ()
 		echo "Name=Roblosium" >> roblosium.desktop
 		echo "Comment=https://roblosium.xyz" >> roblosium.desktop
 		echo "Type=Application" >> roblosium.desktop
-		echo "Exec=env WINEPREFIX=$HOME/.roblosium wine $HOME/.roblosium/drive_c/users/$USER/AppData/Local/ROBLOSIUM/Versions/version-c51d29d1de464d81/RobloxPlayerLauncher.exe %U" >> roblosium.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.roblosium wine $HOME/.roblosium/drive_c/users/$USER/AppData/Local/Blosium/Versions/$ROBLOVER/RobloxPlayerLauncher.exe %U" >> roblosium.desktop
 		echo "MimeType=x-scheme-handler/roblosium-player" >> roblosium.desktop
 	fi
 	if [ $CURRENT == "ItteBlox" ]
@@ -430,11 +430,12 @@ roblosium ()
 	othercheck
 	echo "$CURRENT is now being installed, please wait as this may take some time. "
 	sleep 3
+	ROBLOVER=`curl https://setup.roblosium.net/version`
 	mkdir $HOME/.roblosium
 	WINEPREFIX=$HOME/.roblosium winecfg -v win10
 	mkdir $HOME/tmp
 	cd $HOME/tmp
-	wget http://setup.roblosium.xyz/RobloxPlayerLauncher.exe
+	wget https://setup.roblosium.net/RobloxPlayerLauncher.exe
 	echo "Your browser may open to the Roblosium website when this is ran. Just close it. "
 	sleep 1
 	WINEPREFIX=$HOME/.roblosium wine RobloxPlayerLauncher.exe
@@ -451,7 +452,7 @@ crapblox ()
 	mkdir $HOME/.crapblox
 	WINEPREFIX=$HOME/.crapblox winecfg -v win10
 	cd $HOME/.crapblox/drive_c/users/$USER/AppData/Local # we're doing this cos it installs the client in the same folder as where the installer is ran
-	wget https://cdn.discordapp.com/attachments/999146339801776138/1000288813807054938/CrapbloxLauncher.exe 
+	wget https://cdn.discordapp.com/attachments/1001330818494496799/1001776530407563264/CrapbloxLauncher.exe
 	echo "Don't panic if this looks stuck. Give it a few minutes, if it doesn't work then stop the script, uninstall crapblox using the script, then try running the script again. "
 	sleep 3
 	WINEPREFIX=$HOME/.crapblox wine CrapbloxLauncher.exe
