@@ -54,7 +54,7 @@ calones for helping me, and putting up with me being dumb
 
 thexkey for helping me alot making the Placeholder helper
 
-itteh, genosmrpg, pizzaboxer, kinery and thexkey for making great revivals
+itteh, genosmrpg, jackd900, pizzaboxer, kinery and thexkey for making great revivals
 
 
 <div align="center" class="tip" markdown="1" style>
