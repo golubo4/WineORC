@@ -17,7 +17,7 @@ The needed packages are:
 - The latest WINE (obv, preferably wine-staging)
 - `cabextract` (for Polygon only)
 - `wget`
-- `curl` (for Itteblox only)
+- `curl` (for Itteblox and Roblosium only)
 
 The script can install WINE for you. However, only some distros are supported, so if it fails then you should install WINE and the other dependencies manually.
 
