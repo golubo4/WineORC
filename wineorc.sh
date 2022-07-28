@@ -3,7 +3,7 @@
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.4.5 "
+	echo "Wineorc v2.4.6 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -319,7 +319,7 @@ uri ()
 		echo "Name=Placeholder Player" >> placeholder.desktop
 		echo "Comment=https://placeholder16.tk/" >> placeholder.desktop
 		echo "Type=Application" >> placeholder.desktop
-		echo "Exec=env WINEPREFIX=$HOME/.placeholder wine $HOME/.placeholder/drive_c/users/$USER/AppData/Local/Placeholder/Versions/version-wtf/PlaceholderPlayerLauncher.exe %u" >> placeholder.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.placeholder wine $HOME/.placeholder/drive_c/users/$USER/AppData/Local/Placeholder/Versions/$PLACEHOLDERVER/PlaceholderPlayerLauncher.exe %u" >> placeholder.desktop
 		echo "MimeType=x-scheme-handler/placeholder-player-placeholder16" >> placeholder.desktop
 	fi
 	if [ $CURRENT = "Crapblox" ]
@@ -414,6 +414,7 @@ placeholder ()
 	othercheck
 	echo "$CURRENT is now being installed, please wait as this may take some time. "
         sleep 3
+	PLACEHOLDERVER=`curl https://setup.placeholder16.tk/version` # uri
 	mkdir $HOME/.placeholder
 	WINEPREFIX=$HOME/.placeholder winecfg -v win10
 	mkdir $HOME/tmp
