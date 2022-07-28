@@ -418,7 +418,7 @@ placeholder ()
 	WINEPREFIX=$HOME/.placeholder winecfg -v win10
 	mkdir $HOME/tmp
 	cd $HOME/tmp
-	wget https://cdn.discordapp.com/attachments/976472348574244936/983787617814466570/PlaceholderPlayerLauncher.exe
+	wget https://setup.placeholder16.tk/PlaceholderPlayerLauncher.exe
 	echo "Your browser may open to the Placeholder website when this is ran. Just close it. "
 	WINEPREFIX=$HOME/.placeholder wine PlaceholderPlayerLauncher.exe
 	uri
