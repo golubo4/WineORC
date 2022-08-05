@@ -453,7 +453,7 @@ crapblox ()
 	mkdir $HOME/.crapblox
 	WINEPREFIX=$HOME/.crapblox winecfg -v win10
 	cd $HOME/.crapblox/drive_c/users/$USER/AppData/Local # we're doing this cos it installs the client in the same folder as where the installer is ran
-	wget https://cdn.discordapp.com/attachments/1001330818494496799/1001776530407563264/CrapbloxLauncher.exe
+	wget https://crapblox.cf/binaries/CrapbloxLauncher.exe
 	echo "Don't panic if this looks stuck. Give it a few minutes, if it doesn't work then stop the script, uninstall crapblox using the script, then try running the script again. "
 	sleep 3
 	WINEPREFIX=$HOME/.crapblox wine CrapbloxLauncher.exe
