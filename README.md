@@ -15,7 +15,6 @@ This script will download dependencies, register URI and install the revival of 
 The needed packages are:
 - `sudo`
 - The latest WINE (obv, preferably wine-staging)
-- `cabextract` (for Polygon only)
 - `wget`
 - `curl` (for ItteBlox, Placeholder and Roblosium only)
 
