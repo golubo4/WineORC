@@ -9,14 +9,14 @@
 This script is not supported in any way, shape or form by the official devs of these revivals.
 
 ## ⚡ What this does
-This script will download dependencies, register URI and install the revival of choice (Currently Roblosium, Placeholder and ItteBlox). It can also install DXVK, and uninstall the revival of choice.
+This script will download dependencies, register URI and install the revival of choice (Currently Crapblox, Placeholder and ItteBlox). It can also install DXVK, and uninstall the revival of choice.
 
 ## ⚠️ Requirements
 The needed packages are:
 - `sudo`
 - The latest WINE (obv, preferably wine-staging)
 - `wget`
-- `curl` (for ItteBlox, Placeholder and Roblosium only)
+- `curl` (for ItteBlox and Roblosium only)
 
 The script can install WINE for you. However, only some distros are supported, so if it fails then you should install WINE and the other dependencies manually.
 
