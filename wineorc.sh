@@ -8,7 +8,7 @@ fi
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.6 "
+	echo "Wineorc v2.7 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -48,6 +48,11 @@ uninstall ()
 		rm $HOME/.itteblox -rf
 		sudo rm /usr/share/applications/itteblox.desktop
 	fi
+	if [ $CURRENT == "Tadah" ]
+	then
+		rm $HOME/.tadah -rf
+		sudo rm /usr/share/applications/tadah.desktop
+	fi
 	sudo update-desktop-database
 	echo "Uninstall done. Run the script again if you'd like to reinstall. "
         exit
@@ -59,6 +64,7 @@ then
 	echo "1. Crapblox "
 	echo "2. Placeholder "
 	echo "3. ItteBlox "
+	echo "4. Tadah "
 	read UNINSTALLOPT
 	if [ $UNINSTALLOPT == "1" ]
 	then
@@ -75,6 +81,11 @@ then
 		CURRENT="ItteBlox"
 		uninstall
 	fi
+	if [ $UNINSTALLOPT == "4" ]
+	then
+		CURRENT="Tadah"
+		uninstall
+	fi
 fi
 
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
@@ -83,6 +94,7 @@ then
 	echo "1. ItteBlox wineprefix "
 	echo "2. Crapblox wineprefix "
 	echo "3. Placeholder wineprefix "
+	echo "4. Tadah wineprefix "
 	read DXVKOPT
 	mkdir $HOME/tmp
 	cd $HOME/tmp
@@ -100,6 +112,10 @@ then
 	if [ $DXVKOPT == "3" ]
 	then
 		WINEPREFIX=$HOME/.placeholder ./setup_dxvk.sh install
+	fi
+	if [ $DXVKOPT == "4" ]
+	then
+		WINEPREFIX=$HOME/.tadah ./setup_dxvk.sh install
 	fi
 	cd $HOME
 	rm tmp -rf
@@ -243,7 +259,7 @@ uri ()
 		echo "Exec=env WINEPREFIX=$HOME/.placeholder wine $HOME/.placeholder/drive_c/users/$USER/AppData/Local/Placeholder/Versions/$PLACEHOLDERVER/PlaceholderPlayerLauncher.exe %u" >> placeholder.desktop
 		echo "MimeType=x-scheme-handler/placeholder-player-placeholder16" >> placeholder.desktop
 	fi
-	if [ $CURRENT = "Crapblox" ]
+	if [ $CURRENT == "Crapblox" ]
 	then
 		touch crapblox.desktop
 		echo "[Desktop Entry]" >> crapblox.desktop
@@ -252,6 +268,16 @@ uri ()
 		echo "Type=Application" >> crapblox.desktop
 		echo "Exec=env WINEPREFIX=$HOME/.crapblox wine $HOME/.crapblox/drive_c/users/$USER/AppData/Local/CrapbloxLauncher.exe %U" >> crapblox.desktop
 		echo "MimeType=x-scheme-handler/crapblox2" >> crapblox.desktop
+	fi
+	if [ $CURRENT == "Tadah" ]
+	then
+		touch tadah.desktop
+		echo "[Desktop Entry]" >> tadah.desktop
+		echo "Name=Tadah Player" >> tadah.desktop
+		echo "Comment=https://tadah.rocks/" >> tadah.desktop
+		echo "Type=Application" >> tadah.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.tadah wine $HOME/.tadah/drive_c/users/$USER/AppData/Local/Tadah/2014/TadahLauncher.exe -token %u" >> tadah.desktop
+		echo "MimeType=x-scheme-handler/tadahfourteen" >> tadah.desktop
 	fi
 	sudo mv *.desktop /usr/share/applications
 	sudo update-desktop-database
@@ -307,10 +333,29 @@ crapblox ()
 	uri
 }
 
+tadah ()
+{
+	winecheck
+	othercheck
+	echo "$CURRENT is now being installed, please wait as this may take some time. "
+	sleep 3
+	mkdir $HOME/.tadah
+	mkdir $HOME/tmp
+	cd $HOME/tmp
+	WINEPREFIX=$HOME/.tadah winecfg -v win10
+	wget https://cdn.discordapp.com/attachments/1038634753689141259/1038707370219540480/TadahLauncher.exe
+	echo "You may need to close this with ctrl+c after it finishes. This may also give an error about uri - just ignore it. "
+	sleep 3
+	WINEPREFIX=$HOME/.tadah wine TadahLauncher.exe
+	echo "Tadah launcher probably hasn't closed by now - wait until it finishes and then close it. " # If ryelow is reading this - there's a deformity in the tadah launcher where it will close and then open again - this ofc messes up the install process with wine - pls fix ty !
+	uri
+}
+
 echo "Welcome to Wineorc, please select an revival to install. (see --help for other options) "
 echo "1. Crapblox "
 echo "2. Placeholder "
 echo "3. ItteBlox "
+echo "4. Tadah "
 read OPT
 if [ $OPT == "1" ]
 then
@@ -326,6 +371,11 @@ if [ $OPT == "3" ]
 then
 	CURRENT="ItteBlox"
 	itteblox
+fi
+if [ $OPT == "4" ]
+then
+	CURRENT="Tadah"
+	tadah
 fi
 
 wineserver -k
