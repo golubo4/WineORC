@@ -16,7 +16,7 @@ The needed packages are:
 - `sudo`
 - The latest WINE (obv, preferably wine-staging)
 - `wget`
-- `curl` (for ItteBlox and Roblosium only)
+- `curl` (for ItteBlox and Placeholder only)
 
 The script can install WINE for you. However, only some distros are supported, so if it fails then you should install WINE and the other dependencies manually.
 
@@ -52,8 +52,6 @@ sudo pacman -S $(expac '%n %o' | grep ^wine)`
 If you're not on arch, look at this website to see all the dependencies: https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
 
 2. Uninstalling the revival (use `./wineorc.sh uninstall` and then select the revival) and then reinstalling it again. (this really can help)
-
-3. (for Roblosium only) Make sure that your ad-blocker is disabled when trying to join a game.
 
 If those don't work, DM me on Discord: DarDarDar#3429.
 
