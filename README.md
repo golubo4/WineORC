@@ -1,7 +1,7 @@
 <div align="center" class="tip" markdown="1" style>
 
 ![wineorc logo](https://raw.githubusercontent.com/DarDarDoor/Wineorc/main/photos/Wineorclogo.png)
-![wine ver](https://img.shields.io/badge/wine-7.14-red) ![repo ver](https://img.shields.io/badge/Current%20version-2.5-success) ![lol](https://img.shields.io/badge/Pretty-cool-informational)
+![wine ver](https://img.shields.io/badge/wine-7.19-red) ![repo ver](https://img.shields.io/badge/Current%20version-2.6-success) ![lol](https://img.shields.io/badge/Pretty-cool-informational)
 </div>
 
 # 🍷 A simple Shell script to setup ORC revivals automatically on Linux
