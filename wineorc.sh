@@ -1,9 +1,14 @@
 #!/bin/bash
 # Made by DarDarDar, 2022
 
+if [ $EUID == "0" ]; then
+	echo "Please run this script as a non-root. "
+	exit
+fi
+
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.5 "
+	echo "Wineorc v2.6 "
 	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
 	exit
 fi
@@ -28,25 +33,15 @@ uninstall ()
 {
 	echo "Uninstalling $CURRENT now.. "
 	sleep 3
-	if [ $CURRENT == "Polygon" ] 
+	if [ $CURRENT == "Crapblox" ]
 	then
-		rm $HOME/.polygon -rf
-		sudo rm /usr/share/applications/polygon1*
-	fi
-	if [ $CURRENT == "Roblosium" ]
-	then
-		rm $HOME/.roblosium -rf
-		sudo rm /usr/share/applications/roblosium.desktop
+		rm $HOME/.crapblox -rf
+		sudo rm /usr/share/applications/crapblox.desktop
 	fi
 	if [ $CURRENT == "Placeholder" ]
 	then
 		rm $HOME/.placeholder -rf
 		sudo rm /usr/share/applications/placeholder.desktop
-	fi
-	if [ $CURRENT == "Crapblox" ]
-	then
-		rm $HOME/.crapblox -rf
-		sudo rm /usr/share/applications/crapblox.desktop
 	fi
 	if [ $CURRENT == "ItteBlox" ]
 	then
@@ -61,33 +56,21 @@ uninstall ()
 if [ "$1" == "uninstall" ] || [ "$2" == "uninstall" ]
 then
 	echo "Please select the revival you'd like to uninstall: "
-	echo "1. Polygon "
-	echo "2. Roblosium "
-	echo "3. Placeholder "
-	echo "4. Crapblox "
-	echo "5. ItteBlox "
+	echo "1. Crapblox "
+	echo "2. Placeholder "
+	echo "3. ItteBlox "
 	read UNINSTALLOPT
 	if [ $UNINSTALLOPT == "1" ]
-	then
-		CURRENT="Polygon"
-		uninstall
-	fi
-	if [ $UNINSTALLOPT == "2" ]
-	then
-		CURRENT="Roblosium"
-		uninstall
-	fi
-	if [ $UNINSTALLOPT == "3" ]
-	then
-		CURRENT="Placeholder"
-		uninstall
-	fi
-	if [ $UNINSTALLOPT == "4" ]
 	then
 		CURRENT="Crapblox"
 		uninstall
 	fi
-	if [ $UNINSTALLOPT == "5" ]
+	if [ $UNINSTALLOPT == "2" ]
+	then
+		CURRENT="Placeholder"
+		uninstall
+	fi
+	if [ $UNINSTALLOPT == "3" ]
 	then
 		CURRENT="ItteBlox"
 		uninstall
@@ -97,55 +80,29 @@ fi
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
 	echo "Please select the wineprefix you'd like DXVK to install to: "
-	echo "1. ItteBlox wineprefix (Used for ItteBlox install) "
-	echo "2. Roblosium wineprefix (Used for Roblosium) "
-	echo "3. Placeholder wineprefix (Used for Placeholder) "
-	echo "4. Crapblox wineprefix (Used for Crapblox) "
+	echo "1. ItteBlox wineprefix "
+	echo "2. Crapblox wineprefix "
+	echo "3. Placeholder wineprefix "
 	read DXVKOPT
+	mkdir $HOME/tmp
+	cd $HOME/tmp
+	wget https://github.com/doitsujin/dxvk/releases/download/v1.10.3/dxvk-1.10.3.tar.gz
+	tar -xf dxvk-1.10.3.tar.gz
+	cd dxvk-1.10.3
 	if [ $DXVKOPT == "1" ]
 	then
-		mkdir $HOME/tmp
-		cd $HOME/tmp
-		wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
-		tar -xf dxvk-1.10.1.tar.gz
-		cd dxvk-1.10.1
 		WINEPREFIX=$HOME/.itteblox ./setup_dxvk.sh install
-		cd $HOME
-		rm tmp -rf
 	fi
         if [ $DXVKOPT == "2" ]
         then
-                mkdir $HOME/tmp
-                cd $HOME/tmp
-                wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
-                tar -xf dxvk-1.10.1.tar.gz
-                cd dxvk-1.10.1
-                WINEPREFIX=$HOME/.roblosium ./setup_dxvk.sh install
-                cd $HOME
-                rm tmp -rf
+                WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
         fi
 	if [ $DXVKOPT == "3" ]
 	then
-		mkdir $HOME/tmp
-                cd $HOME/tmp
-                wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
-                tar -xf dxvk-1.10.1.tar.gz
-                cd dxvk-1.10.1
 		WINEPREFIX=$HOME/.placeholder ./setup_dxvk.sh install
-		cd $HOME
-		rm tmp -rf
 	fi
-        if [ $DXVKOPT == "4" ]
-        then
-                mkdir $HOME/tmp
-                cd $HOME/tmp
-                wget https://github.com/doitsujin/dxvk/releases/download/v1.10.1/dxvk-1.10.1.tar.gz
-                tar -xf dxvk-1.10.1.tar.gz
-                cd dxvk-1.10.1
-                WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
-                cd $HOME
-                rm tmp -rf
-        fi
+	cd $HOME
+	rm tmp -rf
 	echo "DXVK has been installed to selected wineprefix. "
 	exit
 fi
@@ -158,10 +115,10 @@ wineinstaller ()
     if [ $DISTRO == "Ubuntu" ] || [ $DISTRO == "LinuxMint" ] || [ $DISTRO == "Pop" ]
     then 
         sudo dpkg --add-architecture i386 # wine installation prep
-        wget -nc https://dl.winehq.org/wine-builds/winehq.key
-        sudo mv winehq.key /usr/share/keyrings/winehq-archive.key
+	sudo mkdir -pm755 /etc/apt/keyrings
+	sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
         VERSION=`lsb_release --release | cut -f2`
-        if [ $VERSION == "22.04" ]
+        if [ $VERSION == "22.04" ] || [ $VERSION == "21" ]
 			        then 
 				        wget -nc https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
 				        sudo mv winehq-jammy.sources /etc/apt/sources.list.d/
@@ -201,6 +158,7 @@ wineinstaller ()
     then
         sudo dnf install wine
     fi
+
     if [ $DISTRO == "Gentoo" ]
     then
         sudo emerge --ask virtual/wine-staging
@@ -265,43 +223,6 @@ othercheck ()
 
 uri ()
 {
-	if [ $CURRENT == "Polygon" ]
-	then
-		touch polygon10.desktop
-		PT="polygon10.desktop"
-		echo "[Desktop Entry]" >> $PT
-		echo "Name=Polygon 2010" >> $PT
-		echo "Comment=https://polygon.pizzaboxer.xyz" >> $PT
-		echo "Type=Application" >> $PT
-		echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-386164ab165b55af/Polygon.exe %U" >> $PT
-		echo "MimeType=x-scheme-handler/polygon-ten" >> $PT
-		touch polygon11.desktop
-		PT="polygon11.desktop"
-		echo "[Desktop Entry]" >> $PT
-                echo "Name=Polygon 2011" >> $PT 
-                echo "Comment=https://polygon.pizzaboxer.xyz" >> $PT 
-                echo "Type=Application" >> $PT
-                echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-9512c515176f9859/Polygon.exe %U" >> $PT                          
-                echo "MimeType=x-scheme-handler/polygon-eleven" >> $PT
-		touch polygon12.desktop
-		PT="polygon12.desktop"
-		echo "[Desktop Entry]" >> $PT
-                echo "Name=Polygon 2012" >> $PT 
-                echo "Comment=https://polygon.pizzaboxer.xyz" >> $PT 
-                echo "Type=Application" >> $PT
-                echo "Exec=env WINEPREFIX=$HOME/.polygon wine $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions/version-f9324578ab26456f/Polygon.exe %U" >> $PT                          
-                echo "MimeType=x-scheme-handler/polygon-twelve" >> $PT
-	fi
-	if [ $CURRENT == "Roblosium" ]
-	then
-		touch roblosium.desktop
-		echo "[Desktop Entry]" >> roblosium.desktop
-		echo "Name=Roblosium" >> roblosium.desktop
-		echo "Comment=https://roblosium.xyz" >> roblosium.desktop
-		echo "Type=Application" >> roblosium.desktop
-		echo "Exec=env WINEPREFIX=$HOME/.roblosium wine $HOME/.roblosium/drive_c/users/$USER/AppData/Local/Blosium/Versions/$ROBLOVER/RobloxPlayerLauncher.exe %U" >> roblosium.desktop
-		echo "MimeType=x-scheme-handler/roblosium-player" >> roblosium.desktop
-	fi
 	if [ $CURRENT == "ItteBlox" ]
 	then
 	        touch itteblox.desktop
@@ -327,68 +248,13 @@ uri ()
 		touch crapblox.desktop
 		echo "[Desktop Entry]" >> crapblox.desktop
 		echo "Name=Crapblox" >> crapblox.desktop
-		echo "Comment=https://crapblox.cf" >> crapblox.desktop
+		echo "Comment=https://keanurv.cf" >> crapblox.desktop
 		echo "Type=Application" >> crapblox.desktop
 		echo "Exec=env WINEPREFIX=$HOME/.crapblox wine $HOME/.crapblox/drive_c/users/$USER/AppData/Local/CrapbloxLauncher.exe %U" >> crapblox.desktop
 		echo "MimeType=x-scheme-handler/crapblox2" >> crapblox.desktop
 	fi
 	sudo mv *.desktop /usr/share/applications
 	sudo update-desktop-database
-}
-
-polygon ()
-{
-	winecheck
-	othercheck
-	echo "$CURRENT is now being installed, please wait as this may take some time. "
-	sleep 3
-	mkdir $HOME/.polygon # We're going to make a custom wineprefix against the user's will, since Polygon requires a fuck-ton of stupid dependencies to even run.
-	mkdir $HOME/tmp
-	cd $HOME/tmp
-	wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-	chmod +x winetricks
-	WINEPREFIX=$HOME/.polygon ./winetricks --unattended vcrun2008 vcrun2015 mfc90
-	wget setup2010.pizzaboxer.xyz/Polygon2010.exe
-	wget setup2011.pizzaboxer.xyz/Polygon2011.exe
-	wget setup2012.pizzaboxer.xyz/Polygon2012.exe
-	echo "If any of these don't seem to close on its own, kill it with CTRL+C. "
-	sleep 1
-	WINEPREFIX=$HOME/.polygon wine Polygon2010.exe
-	WINEPREFIX=$HOME/.polygon wine Polygon2011.exe
-	echo "Your browser may open to the Polygon website when this is ran. Just close it. "
-	sleep 1
-	WINEPREFIX=$HOME/.polygon wine Polygon2012.exe
-	cd $HOME/.polygon/drive_c/users/$USER/AppData/Local/'Project Polygon'/Versions # this next part really sucks
-	cd version-3* # 2010
-	cd Microsoft.VC90.CRT
-	cp * ..
-	cd ..
-	rm msvcr90.dll
-	cd Microsoft.VC90.MFC
-	cp * ..
-	cd ..
-	cd Microsoft.VC90.OPENMP
-	cp * ..
-	cd ../..
-	cd version-9* # 2011
-	cd Microsoft.VC90.CRT
-        cp * ..
-        cd ..
-        rm msvcr90.dll
-        cd Microsoft.VC90.MFC
-        cp * ..
-        cd ..
-        cd Microsoft.VC90.OPENMP
-        cp * ..
-        cd ../.. 
-	cd version-f* # 2012
-	cd Microsoft.VC90.CRT
-        cp msvcr90.dll msvcp90.dll ..
-        cd ..
-        cd Microsoft.VC90.OPENMP
-        cp * ..
-        cd $HOME/tmp
-	uri
 }
 
 itteblox ()
@@ -425,25 +291,6 @@ placeholder ()
 	uri
 }
 
-roblosium ()
-{
-	winecheck
-	othercheck
-	echo "$CURRENT is now being installed, please wait as this may take some time. "
-	sleep 3
-	ROBLOVER=`curl https://setup.roblosium.net/version`
-	mkdir $HOME/.roblosium
-	WINEPREFIX=$HOME/.roblosium winecfg -v win10
-	mkdir $HOME/tmp
-	cd $HOME/tmp
-	wget https://setup.roblosium.net/RobloxPlayerLauncher.exe
-	echo "Your browser may open to the Roblosium website when this is ran. Just close it. "
-	sleep 1
-	WINEPREFIX=$HOME/.roblosium wine RobloxPlayerLauncher.exe
-	uri
-
-}
-
 crapblox ()
 {
 	winecheck
@@ -453,41 +300,29 @@ crapblox ()
 	mkdir $HOME/.crapblox
 	WINEPREFIX=$HOME/.crapblox winecfg -v win10
 	cd $HOME/.crapblox/drive_c/users/$USER/AppData/Local # we're doing this cos it installs the client in the same folder as where the installer is ran
-	wget https://crapblox.cf/binaries/CrapbloxLauncher.exe
-	echo "Don't panic if this looks stuck. Give it a few minutes, if it doesn't work then stop the script, uninstall crapblox using the script, then try running the script again. "
+	wget https://keanurv.cf/binaries/CrapbloxLauncher.exe 
+	echo "Don't panic if this looks stuck. Give it a few minutes, if it doesn't work then stop the script, uninstall crapblox using the script, then try running the script again. Once the installer finishes, press ctrl+c to close if it looks stuck." # JESUS why does this HATE working so much I hate jackd he will die.
 	sleep 3
 	WINEPREFIX=$HOME/.crapblox wine CrapbloxLauncher.exe
 	uri
 }
 
 echo "Welcome to Wineorc, please select an revival to install. (see --help for other options) "
-echo "1. Polygon "
-echo "2. Roblosium "
-echo "3. Placeholder "
-echo "4. Crapblox "
-echo "5. ItteBlox "
+echo "1. Crapblox "
+echo "2. Placeholder "
+echo "3. ItteBlox "
 read OPT
-if [ $OPT == "1" ] 
-then
-	CURRENT="Polygon"
-	polygon
-fi
-if [ $OPT == "2" ]
-then
-	CURRENT="Roblosium"
-	roblosium
-fi
-if [ $OPT == "3" ]
-then
-	CURRENT="Placeholder"
-	placeholder
-fi
-if [ $OPT == "4" ]
+if [ $OPT == "1" ]
 then
 	CURRENT="Crapblox"
 	crapblox
 fi
-if [ $OPT == "5" ]
+if [ $OPT == "2" ]
+then
+	CURRENT="Placeholder"
+	placeholder
+fi
+if [ $OPT == "3" ]
 then
 	CURRENT="ItteBlox"
 	itteblox
