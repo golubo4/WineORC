@@ -62,10 +62,10 @@ if [ "$1" == "uninstall" ] || [ "$2" == "uninstall" ]
 then
 	echo "Please select the revival you'd like to uninstall: "
 	echo "1. Crapblox "
-	echo "2. Placeholder "
-	echo "3. ItteBlox "
-	echo "4. Tadah "
-	read UNINSTALLOPT
+	echo "2. Tadah "
+	echo "3. Placeholder "
+	echo "4. ItteBlox "
+	read UNINSTALLOPT 
 	if [ $UNINSTALLOPT == "1" ]
 	then
 		CURRENT="Crapblox"
@@ -73,28 +73,27 @@ then
 	fi
 	if [ $UNINSTALLOPT == "2" ]
 	then
-		CURRENT="Placeholder"
-		uninstall
+		CURRENT="Tadah"
+	 	uninstall	
 	fi
 	if [ $UNINSTALLOPT == "3" ]
 	then
-		CURRENT="ItteBlox"
+		CURRENT="Placeholder"
 		uninstall
 	fi
 	if [ $UNINSTALLOPT == "4" ]
 	then
-		CURRENT="Tadah"
-		uninstall
+		CURRENT="ItteBlox"
+		uninstall	
 	fi
 fi
-
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
 	echo "Please select the wineprefix you'd like DXVK to install to: "
-	echo "1. ItteBlox wineprefix "
-	echo "2. Crapblox wineprefix "
+	echo "1. Crapblox wineprefix "
+	echo "2. Tadah wineprefix "
 	echo "3. Placeholder wineprefix "
-	echo "4. Tadah wineprefix "
+	echo "4. ItteBlox wineprefix "
 	read DXVKOPT
 	mkdir $HOME/tmp
 	cd $HOME/tmp
@@ -103,11 +102,11 @@ then
 	cd dxvk-1.10.3
 	if [ $DXVKOPT == "1" ]
 	then
-		WINEPREFIX=$HOME/.itteblox ./setup_dxvk.sh install
+		WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
 	fi
         if [ $DXVKOPT == "2" ]
         then
-                WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
+                WINEPREFIX=$HOME/.tadah ./setup_dxvk.sh install
         fi
 	if [ $DXVKOPT == "3" ]
 	then
@@ -115,7 +114,7 @@ then
 	fi
 	if [ $DXVKOPT == "4" ]
 	then
-		WINEPREFIX=$HOME/.tadah ./setup_dxvk.sh install
+		WINEPREFIX=$HOME/.itteblox ./setup_dxvk.sh install
 	fi
 	cd $HOME
 	rm tmp -rf
@@ -224,7 +223,7 @@ othercheck ()
 	else
 		echo "wget is installed, skipping check.. "
 	fi
-	if [ $CURRENT == "ItteBlox" ] || [ $CURRENT == "Roblosium" ]
+	if [ $CURRENT == "ItteBlox" ] || [ $CURRENT == "Placeholder" ]
 	then	
 		if [ ! -x /usr/bin/curl ]
 		then
@@ -353,9 +352,9 @@ tadah ()
 
 echo "Welcome to Wineorc, please select an revival to install. (see --help for other options) "
 echo "1. Crapblox "
-echo "2. Placeholder "
-echo "3. ItteBlox "
-echo "4. Tadah "
+echo "2. Tadah "
+echo "3. Placeholder "
+echo "4. ItteBlox "
 read OPT
 if [ $OPT == "1" ]
 then
@@ -364,18 +363,18 @@ then
 fi
 if [ $OPT == "2" ]
 then
-	CURRENT="Placeholder"
-	placeholder
+	CURRENT="Tadah"
+	tadah
 fi
 if [ $OPT == "3" ]
 then
-	CURRENT="ItteBlox"
-	itteblox
+	CURRENT="Placeholder"
+	placeholder
 fi
 if [ $OPT == "4" ]
 then
-	CURRENT="Tadah"
-	tadah
+	CURRENT="ItteBlox"
+	itteblox	
 fi
 
 wineserver -k
