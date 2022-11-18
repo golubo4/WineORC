@@ -97,9 +97,9 @@ then
 	read DXVKOPT
 	mkdir $HOME/tmp
 	cd $HOME/tmp
-	wget https://github.com/doitsujin/dxvk/releases/download/v1.10.3/dxvk-1.10.3.tar.gz
-	tar -xf dxvk-1.10.3.tar.gz
-	cd dxvk-1.10.3
+	wget https://github.com/doitsujin/dxvk/releases/download/v2.0/dxvk-2.0.tar.gz
+	tar -xf dxvk-2.0.tar.gz
+	cd dxvk-2.0
 	if [ $DXVKOPT == "1" ]
 	then
 		WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
