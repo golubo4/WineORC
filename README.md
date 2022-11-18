@@ -49,13 +49,16 @@ If the revival crashes/doesn't launch, try to:
 `sudo pacman -S expac &&
 sudo pacman -S $(expac '%n %o' | grep ^wine)`
 
-If you're not on arch, look at this website to see all the dependencies: https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies
+If you're not on arch, see [here](https://wiki.winehq.org/Building_Wine#Satisfying_Build_Dependencies) for all the dependencies.
 
 2. Uninstalling the revival (use `./wineorc.sh uninstall` and then select the revival) and then reinstalling it again. (this really can help)
 
 If those don't work, DM me on Discord: DarDarDar#3429.
 
 ## Credits
+
+[doitsujin/dxvk](https://github.com/doitsujin/dxvk), licensed under zlib
+
 vl1 for making the Polygon guide
 
 calones for helping me, and putting up with me being dumb
