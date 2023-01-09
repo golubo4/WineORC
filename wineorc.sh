@@ -263,10 +263,10 @@ uri ()
 		touch crapblox.desktop
 		echo "[Desktop Entry]" >> crapblox.desktop
 		echo "Name=Crapblox" >> crapblox.desktop
-		echo "Comment=https://keanurv.cf" >> crapblox.desktop
+		echo "Comment=https://crapblox.cf" >> crapblox.desktop
 		echo "Type=Application" >> crapblox.desktop
 		echo "Exec=env WINEPREFIX=$HOME/.crapblox wine $HOME/.crapblox/drive_c/users/$USER/AppData/Local/CrapbloxLauncher.exe %U" >> crapblox.desktop
-		echo "MimeType=x-scheme-handler/crapblox2" >> crapblox.desktop
+		echo "MimeType=x-scheme-handler/crapblox2016" >> crapblox.desktop
 	fi
 	if [ $CURRENT == "Tadah" ]
 	then
