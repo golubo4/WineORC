@@ -46,7 +46,7 @@ uninstall ()
 	fi
 	if [ $CURRENT == "SyntaxEco" ]
 	then
-		rm $HOME/.tadah -rf
+		rm $HOME/.syntaxeco -rf
 		sudo rm /usr/share/applications/syntaxeco.desktop
 	fi
 	sudo update-desktop-database
