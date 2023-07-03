@@ -1,5 +1,6 @@
 #!/bin/bash
 # Made by DarDarDar, 2022
+# wineORC 2.8+ by PlaceholderLabs, 2023
 
 if [ $EUID == "0" ]; then
 	echo "Please run this script as a non-root. "
@@ -8,19 +9,19 @@ fi
 
 if [ "$1" == "--version" ]
 then
-	echo "Wineorc v2.7 "
-	echo "License: MIT (see https://github.com/DarDarDoor/Wineorc/blob/main/LICENSE) "
+	echo "Wineorc v2.8 "
+	echo "License: MIT (see https://github.com/PlaceholderLabs/wineORC/blob/main/LICENSE) "
 	exit
 fi
 
 if [ "$1" == "--help" ]
 then
-	echo "Wineorc: The only script that matters (real) "
+	echo "wineORC: The only script that matters (real) "
 	echo "Usage: ./wineorc.sh [OPTION]... "
 	echo ""
 	echo "Options: "
-	echo "	uninstall: uninstalls a selected revival from a list of options "
-	echo "	dxvk: installs dxvk, the directx to vulkan translation layer, to a wineprefix from a list of options. this can drastically improve performance in some revivals "
+	echo "	uninstall: uninstalls a selected private server from a list of options "
+	echo "	dxvk: installs dxvk, the directx to vulkan translation layer, to a wineprefix from a list of options. this can drastically improve performance in some private servers "
 	echo "	--version: prints the version of wineorc that is being ran "
 	echo "	--help: what you're reading right now, you idiot "
 	echo ""
@@ -33,11 +34,6 @@ uninstall ()
 {
 	echo "Uninstalling $CURRENT now.. "
 	sleep 3
-	if [ $CURRENT == "Crapblox" ]
-	then
-		rm $HOME/.crapblox -rf
-		sudo rm /usr/share/applications/crapblox.desktop
-	fi
 	if [ $CURRENT == "Placeholder" ]
 	then
 		rm $HOME/.placeholder -rf
@@ -48,10 +44,10 @@ uninstall ()
 		rm $HOME/.itteblox -rf
 		sudo rm /usr/share/applications/itteblox.desktop
 	fi
-	if [ $CURRENT == "Tadah" ]
+	if [ $CURRENT == "SyntaxEco" ]
 	then
 		rm $HOME/.tadah -rf
-		sudo rm /usr/share/applications/tadah.desktop
+		sudo rm /usr/share/applications/syntaxeco.desktop
 	fi
 	sudo update-desktop-database
 	echo "Uninstall done. Run the script again if you'd like to reinstall. "
@@ -61,39 +57,32 @@ uninstall ()
 if [ "$1" == "uninstall" ] || [ "$2" == "uninstall" ]
 then
 	echo "Please select the revival you'd like to uninstall: "
-	echo "1. Crapblox "
-	echo "2. Tadah "
-	echo "3. Placeholder "
-	echo "4. ItteBlox "
+	echo "1. Placeholder "
+	echo "2. ItteBlox "
+	echo "3. SyntaxEco "
 	read UNINSTALLOPT 
 	if [ $UNINSTALLOPT == "1" ]
-	then
-		CURRENT="Crapblox"
-		uninstall
-	fi
-	if [ $UNINSTALLOPT == "2" ]
-	then
-		CURRENT="Tadah"
-	 	uninstall	
-	fi
-	if [ $UNINSTALLOPT == "3" ]
 	then
 		CURRENT="Placeholder"
 		uninstall
 	fi
-	if [ $UNINSTALLOPT == "4" ]
+	if [ $UNINSTALLOPT == "2" ]
 	then
 		CURRENT="ItteBlox"
-		uninstall	
+	 	uninstall	
+	fi
+	if [ $UNINSTALLOPT == "3" ]
+	then
+		CURRENT="SyntaxEco"
+		uninstall
 	fi
 fi
 if [ "$1" == "dxvk" ] || [ "$2" == "dxvk" ]
 then
 	echo "Please select the wineprefix you'd like DXVK to install to: "
-	echo "1. Crapblox wineprefix "
-	echo "2. Tadah wineprefix "
-	echo "3. Placeholder wineprefix "
-	echo "4. ItteBlox wineprefix "
+	echo "1. Placeholder wineprefix "
+	echo "2. ItteBlox wineprefix "
+	echo "3. SyntaxEco wineprefix "
 	read DXVKOPT
 	mkdir $HOME/tmp
 	cd $HOME/tmp
@@ -102,19 +91,15 @@ then
 	cd dxvk-2.0
 	if [ $DXVKOPT == "1" ]
 	then
-		WINEPREFIX=$HOME/.crapblox ./setup_dxvk.sh install
+		WINEPREFIX=$HOME/.placeholder ./setup_dxvk.sh install
 	fi
         if [ $DXVKOPT == "2" ]
         then
-                WINEPREFIX=$HOME/.tadah ./setup_dxvk.sh install
+                WINEPREFIX=$HOME/.itteblox ./setup_dxvk.sh install
         fi
 	if [ $DXVKOPT == "3" ]
 	then
-		WINEPREFIX=$HOME/.placeholder ./setup_dxvk.sh install
-	fi
-	if [ $DXVKOPT == "4" ]
-	then
-		WINEPREFIX=$HOME/.itteblox ./setup_dxvk.sh install
+		WINEPREFIX=$HOME/.syntaxeco ./setup_dxvk.sh install
 	fi
 	cd $HOME
 	rm tmp -rf
@@ -124,7 +109,7 @@ fi
 
 wineinstaller ()
 {
-    echo "Please accept any prompts it gives you and enter your password if necessary. "
+    echo "Please accept any prompts it gives you, and enter your password if necessary. "
     sleep 3
     DISTRO=`cat /etc/*release | grep DISTRIB_ID | cut -d '=' -f 2` # gets distro name
     if [ $DISTRO == "Ubuntu" ] || [ $DISTRO == "LinuxMint" ] || [ $DISTRO == "Pop" ]
@@ -204,17 +189,6 @@ winecheck ()
 
 othercheck ()
 {
-	if [ $CURRENT == "Polygon" ]
-	then 
-	        if [ ! -x /usr/bin/cabextract ]
-		then
-			echo "cabextract seems to not be installed. Please kill the script then install cabextract via your package manager. "
-			echo "If you're sure it's installed, then don't kill the script. "
-			sleep 3
-		else
-			echo "cabextract is installed, skipping check.. "
-		fi
-	fi
 	if [ ! -x /usr/bin/wget ]
 	then
 		echo "wget seems to not be installed. Please kill the script then install wget via your package manager. "
@@ -223,7 +197,7 @@ othercheck ()
 	else
 		echo "wget is installed, skipping check.. "
 	fi
-	if [ $CURRENT == "ItteBlox" ] || [ $CURRENT == "Placeholder" ]
+	if [ $CURRENT == "ItteBlox" ] || [ $CURRENT == "Placeholder" ] || [ $CURRENT == "SyntaxEco" ]
 	then	
 		if [ ! -x /usr/bin/curl ]
 		then
@@ -258,25 +232,15 @@ uri ()
 		echo "Exec=env WINEPREFIX=$HOME/.placeholder wine $HOME/.placeholder/drive_c/users/$USER/AppData/Local/Placeholder/Versions/$PLACEHOLDERVER/PlaceholderPlayerLauncher.exe %u" >> placeholder.desktop
 		echo "MimeType=x-scheme-handler/placeholder-player-placeholder16" >> placeholder.desktop
 	fi
-	if [ $CURRENT == "Crapblox" ]
+	if [ $CURRENT == "SyntaxEco" ]
 	then
-		touch crapblox.desktop
-		echo "[Desktop Entry]" >> crapblox.desktop
-		echo "Name=Crapblox" >> crapblox.desktop
-		echo "Comment=https://crapblox.cf" >> crapblox.desktop
-		echo "Type=Application" >> crapblox.desktop
-		echo "Exec=env WINEPREFIX=$HOME/.crapblox wine $HOME/.crapblox/drive_c/users/$USER/AppData/Local/CrapbloxLauncher.exe %U" >> crapblox.desktop
-		echo "MimeType=x-scheme-handler/crapblox2016" >> crapblox.desktop
-	fi
-	if [ $CURRENT == "Tadah" ]
-	then
-		touch tadah.desktop
-		echo "[Desktop Entry]" >> tadah.desktop
-		echo "Name=Tadah Player" >> tadah.desktop
-		echo "Comment=https://tadah.rocks/" >> tadah.desktop
-		echo "Type=Application" >> tadah.desktop
-		echo "Exec=env WINEPREFIX=$HOME/.tadah wine $HOME/.tadah/drive_c/users/$USER/AppData/Local/Tadah/2014/TadahLauncher.exe -token %u" >> tadah.desktop
-		echo "MimeType=x-scheme-handler/tadahfourteen" >> tadah.desktop
+		touch syntaxeco.desktop
+		echo "[Desktop Entry]" >> syntaxeco.desktop
+		echo "Name=Syntax" >> syntaxeco.desktop
+		echo "Comment=https://syntax.eco" >> syntaxeco.desktop
+		echo "Type=Application" >> syntaxeco.desktop
+		echo "Exec=env WINEPREFIX=$HOME/.syntaxeco wine $HOME/.syntaxeco/drive_c/users/$USER/AppData/Local/Syntax/Versions/$SYNTAXVER/SyntaxPlayerLauncher.exe %u" >> syntaxeco.desktop
+		echo "MimeType=x-scheme-handler/roblox-player-syntax" >> syntaxeco.desktop
 	fi
 	sudo mv *.desktop /usr/share/applications
 	sudo update-desktop-database
@@ -316,66 +280,46 @@ placeholder ()
 	uri
 }
 
-crapblox ()
+syntaxeco ()
 {
 	winecheck
 	othercheck
 	echo "$CURRENT is now being installed, please wait as this may take some time. "
-	sleep 3
-	mkdir $HOME/.crapblox
-	WINEPREFIX=$HOME/.crapblox winecfg -v win10
-	cd $HOME/.crapblox/drive_c/users/$USER/AppData/Local # we're doing this cos it installs the client in the same folder as where the installer is ran
-	wget https://cdn.discordapp.com/attachments/1061138976947318826/1062115113223589908/CrapbloxLauncher.exe
-	echo "Don't panic if this looks stuck. Give it a few minutes, if it doesn't work then stop the script, uninstall crapblox using the script, then try running the script again. Once the installer finishes, press ctrl+c to close if it looks stuck." # JESUS why does this HATE working so much I hate jackd he will die.
-	sleep 3
-	WINEPREFIX=$HOME/.crapblox wine CrapbloxLauncher.exe
-	uri
-}
-
-tadah ()
-{
-	winecheck
-	othercheck
-	echo "$CURRENT is now being installed, please wait as this may take some time. "
-	sleep 3
-	mkdir $HOME/.tadah
+ 	echo "$CURRENT is untested and new, please practice some caution with this private-server."
+        sleep 3
+	PLACEHOLDERVER=`curl https://setup.syntax.eco/version` # uri
+	mkdir $HOME/.syntaxeco
+	WINEPREFIX=$HOME/.syntaxeco winecfg -v win10
 	mkdir $HOME/tmp
 	cd $HOME/tmp
-	WINEPREFIX=$HOME/.tadah winecfg -v win10
-	wget https://cdn.discordapp.com/attachments/1038634753689141259/1038707370219540480/TadahLauncher.exe
-	echo "You may need to close this with ctrl+c after it finishes. This may also give an error about uri - just ignore it. "
-	sleep 3
-	WINEPREFIX=$HOME/.tadah wine TadahLauncher.exe
-	echo "Tadah launcher probably hasn't closed by now - wait until it finishes and then close it. " # If ryelow is reading this - there's a deformity in the tadah launcher where it will close and then open again - this ofc messes up the install process with wine - pls fix ty !
+	wget https://www.syntax.eco/static/SyntaxPlayerLauncher.exe # BRO, WHY DID HE NOT JUST FOLLOW THE CDN SCHEMA FULLY?
+	echo "Your browser may open to the SyntaxEco website when this is ran. Just close it. "
+	WINEPREFIX=$HOME/.syntaxeco wine SyntaxPlayerLauncher.exe
 	uri
 }
 
+
 echo "Welcome to Wineorc, please select an revival to install. (see --help for other options) "
-echo "1. Crapblox "
-echo "2. Tadah "
-echo "3. Placeholder "
-echo "4. ItteBlox "
+echo "1. Placeholder "
+echo "2. ItteBlox "
+echo "3. SyntaxEco "
 read OPT
 if [ $OPT == "1" ]
-then
-	CURRENT="Crapblox"
-	crapblox
-fi
-if [ $OPT == "2" ]
-then
-	CURRENT="Tadah"
-	tadah
-fi
-if [ $OPT == "3" ]
 then
 	CURRENT="Placeholder"
 	placeholder
 fi
-if [ $OPT == "4" ]
+if [ $OPT == "2" ]
 then
 	CURRENT="ItteBlox"
 	itteblox	
 fi
+if [ $OPT == "3" ]
+then
+	CURRENT="SyntaxEco"
+	syntaxeco
+fi
+
 
 wineserver -k
 cd $HOME
