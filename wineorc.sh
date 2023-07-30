@@ -292,7 +292,7 @@ syntaxeco ()
 	WINEPREFIX=$HOME/.syntaxeco winecfg -v win10
 	mkdir $HOME/tmp
 	cd $HOME/tmp
-	wget https://www.syntax.eco/static/SyntaxPlayerLauncher.exe # BRO, WHY DID HE NOT JUST FOLLOW THE CDN SCHEMA FULLY?
+	wget https://setup.syntax.eco/SyntaxPlayerLauncher.exe # BRO, WHY DID HE NOT JUST FOLLOW THE CDN SCHEMA FULLY?
 	echo "Your browser may open to the SyntaxEco website when this is ran. Just close it. "
 	WINEPREFIX=$HOME/.syntaxeco wine SyntaxPlayerLauncher.exe
 	uri
