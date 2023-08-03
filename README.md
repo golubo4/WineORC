@@ -14,6 +14,8 @@ This script is ***not supported, authorized, or afilliated in any way, shape or 
 
 *wineORC 2.8+ is also not supported, authorized, afilliated, a part of, or maintained by DarDarDar.*
 
+forked from Placeholder in-case stuff will go apeshit and everyone suddenly removes the tool
+
 ## Supported Revivals
 * Projekt Placeholder (Public & Private)
 * IttehBlox
